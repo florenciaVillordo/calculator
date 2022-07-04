@@ -104,7 +104,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             ConstraintViolationException ex, WebRequest request) {
         List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errors.add(violation.getRootBeanClass().getName() + " " +
+            errors.add(violation.getRootBeanClass().getSimpleName() + " " +
                     violation.getPropertyPath() + ": " + violation.getMessage());
         }
 

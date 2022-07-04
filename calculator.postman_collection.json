@@ -50,7 +50,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MzI0MjMiLCJpYXQiOjE2NTY5NTY3OTcsImV4cCI6MTY1Njk1Njg1N30.mlPQ2hTw2ROgpd-ikp2NZ8Lgf4wU56I5Tw9ABXKt_Orwt4vzC5tXmF4_IilqVTAz2A1EljvBn86QI_PpibTCeg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MzI0MjMiLCJpYXQiOjE2NTY5NzE4ODcsImV4cCI6MTY1Njk3Nzg4N30.G7hsrHxaGw5TaakiLYw6f4GxFdjHAZn2Db6knG0v8d-0Hf68KMAuPj0WpOWGtKPFB7zeePYUoaoanoKSKZtPzA",
 						"type": "default"
 					}
 				],
@@ -64,7 +64,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/add/?secondNumber=594&firstNumber=4.8",
+					"raw": "localhost:8080/add/?secondNumber=594&firstNumber=4.832",
 					"host": [
 						"localhost"
 					],
@@ -80,7 +80,7 @@
 						},
 						{
 							"key": "firstNumber",
-							"value": "4.8"
+							"value": "4.832"
 						}
 					]
 				}
@@ -132,7 +132,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MzI0MjMiLCJpYXQiOjE2NTY5NTgxODUsImV4cCI6MTY1Njk2NDE4NX0.3w8PRQeze8tNozQjhwTNwQ9QZgnzezRwLKxsrM0FrW3b9AHsxl5rZhXn44_kk1J7bxTN10msb0-jboF6J-krIQ",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY1Njk3NTExNywiZXhwIjoxNjU2OTgxMTE3fQ.ETH0iCsgCGIF7VCIPGVLi5jtt0cQjY69JQFIDH5NNW7-1XgfNnl-zxAMvfK-YTfFM0qAKIMH6kSpSCOm2eOKjw",
 						"type": "default"
 					}
 				],
@@ -146,13 +146,72 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/transactions",
+					"raw": "localhost:8080/transactions?offset=0&limit=10&orderBy=txType&result=SUCCESS&txType=TRANSACTIONS",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"transactions"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "orderBy",
+							"value": "txType"
+						},
+						{
+							"key": "result",
+							"value": "SUCCESS"
+						},
+						{
+							"key": "txType",
+							"value": "TRANSACTIONS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY1Njk3NzExMSwiZXhwIjoxNjU2OTgzMTExfQ.9wq9H6PCY8l9_JfuZzAox9_Uf3r8S_rW9X8iTsWVauFKxPby1UNXUJxfcNqUxANtQPopS-xC40Z9ybtKhBkffw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"logout"
 					]
 				}
 			},
