@@ -2,9 +2,9 @@
 Add calculator
 
 
-###Docker image:
+### Docker image:
 
-###Run App:
+### Run App:
 For start this project, should run the following commands
 
 ```
