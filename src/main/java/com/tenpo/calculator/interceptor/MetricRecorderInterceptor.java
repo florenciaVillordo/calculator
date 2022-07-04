@@ -39,12 +39,12 @@ public class MetricRecorderInterceptor implements HandlerInterceptor {
         }
     }
 
-    private String getTransactionName(String name){
+    private TransactionName getTransactionName(String name){
         if (CalculatorConstant.metricNameMap.get(name) != null){
-            return CalculatorConstant.metricNameMap.get(name).name();
+            return CalculatorConstant.metricNameMap.get(name);
         }
         log.warn("Request Uri {} could not map in Transaction name", name);
-        return name;
+        return TransactionName.OTHER;
     }
 
     private void recordTransaction(String transactionName, TxResult result) {

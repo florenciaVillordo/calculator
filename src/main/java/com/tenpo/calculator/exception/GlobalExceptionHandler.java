@@ -2,6 +2,7 @@ package com.tenpo.calculator.exception;
 
 import com.tenpo.calculator.security.exception.InvalidArgumentException;
 
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.security.SignatureException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +32,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+
 
     /**
      * Handles UsernameNotFoundException,LoginFailedException reports Login failed
@@ -61,7 +66,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handles bad request exception
      *
-     * @param ex      InvalidArgumentException, IllegalArgumentException, BadCredentialsException, MissingServletRequestParameterException
+     * @param ex      InvalidArgumentException
      * @param request
      * @return ResponseEntity with HTTP status 400
      */
@@ -72,6 +77,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 errorDetail, new HttpHeaders(), errorDetail.getHttpStatus());
     }
 
+    /**
+     * Handles PropertyReferenceException
+     *
+     * @param ex      PropertyReferenceException
+     * @param request
+     * @return ResponseEntity with HTTP status 400
+     */
+    @ExceptionHandler({PropertyReferenceException.class})
+    public ResponseEntity<?> handlePropertyReferenceException(Exception ex, WebRequest request) {
+        ErrorDetail errorDetail = ErrorDetail.builder().timestamp(new Date()).httpStatus(HttpStatus.BAD_REQUEST).message(ex.getMessage()).build();
+        return new ResponseEntity<>(
+                errorDetail, new HttpHeaders(), errorDetail.getHttpStatus());
+    }
 
 
     /**
@@ -93,6 +111,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorDetail errorDetail = ErrorDetail.builder().timestamp(new Date()).httpStatus(HttpStatus.BAD_REQUEST).message("Validation ERROR").details(errors).build();
         return new ResponseEntity<>(
                 errorDetail, new HttpHeaders(), errorDetail.getHttpStatus());
+    }
+
+    /**
+     * Handles MethodArgumentNotValidException, thrown when method argument is not the expected type
+     *
+     * @param ex      MissingServletRequestParameterException
+     * @param request
+     * @return ResponseEntity with HTTP status 400
+     */
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(
+            MissingServletRequestParameterException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+        String error = ex.getParameterName() + " parameter is missing";
+        ErrorDetail errorDetail = ErrorDetail.builder().timestamp(new Date()).httpStatus(HttpStatus.BAD_REQUEST).message(ex.getLocalizedMessage()).details(
+                Arrays.asList(error)).build();
+        return new ResponseEntity<>(errorDetail, new HttpHeaders(), errorDetail.getHttpStatus());
     }
 
     /**

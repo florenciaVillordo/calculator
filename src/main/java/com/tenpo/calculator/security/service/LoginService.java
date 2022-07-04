@@ -58,7 +58,7 @@ public class LoginService {
         }
         com.tenpo.calculator.security.model.User user = userOp.get();
         Set<GrantedAuthority> grantedAuthorities =
-                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getType().name())).collect(Collectors.toSet());
+                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toSet());
         return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
 }

@@ -26,7 +26,7 @@ public class JWTService {
 
     @Value("${tenpo.app.jwt.secret:secret}")
     private String jwtSecret;
-    @Value("${tenpo.app.jwt.expiration.ms:60000}")
+    @Value("${tenpo.app.jwt.expiration.ms:6000000}")
     private int jwtExpirationMs;
 
 

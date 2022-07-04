@@ -1,11 +1,14 @@
 package com.tenpo.calculator.model;
 
+import com.tenpo.calculator.interceptor.TransactionName;
 import com.tenpo.calculator.security.model.User;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +42,8 @@ public class TxHistory {
 
     private OffsetDateTime createDate;
 
-    private String txType;
+    @Enumerated(EnumType.STRING)
+    private TransactionName txType;
 
     @ManyToOne
     private User user;

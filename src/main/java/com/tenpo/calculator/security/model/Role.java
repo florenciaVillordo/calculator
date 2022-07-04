@@ -32,9 +32,7 @@ public class Role {
     private UUID id;
 
     @Enumerated(EnumType.ORDINAL)
-    private RoleType type;
-
-    private String name;
+    private RoleType roleName;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;

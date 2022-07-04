@@ -15,11 +15,14 @@ public interface CalculatorConstant {
     String AUTH_LOGOUT_URI = AUTH_URI + LOGOUT_URI;
     String AUTH_SIGN_UP_URI = AUTH_URI + SIGN_UP_URI;
     String ADD_URI = "/add";
+    String TRANSACTIONS_URI = "/transactions";
 
     Map<String, TransactionName> metricNameMap= ImmutableMap.of(
             AUTH_LOGIN_URI, TransactionName.LOGIN,
             AUTH_LOGOUT_URI, TransactionName.LOGOUT,
             AUTH_SIGN_UP_URI, TransactionName.SIGN_UP,
-            ADD_URI, TransactionName.ADD
+            ADD_URI + "/", TransactionName.ADD,
+            TRANSACTIONS_URI, TransactionName.TRANSACTIONS
+
     );
 }

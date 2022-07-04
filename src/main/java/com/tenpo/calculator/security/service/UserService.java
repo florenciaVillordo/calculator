@@ -40,7 +40,7 @@ public class UserService {
                 .password(encoder.encode(userDto.getPassword()))
                 .build();
         Set<Role> userRoles = new HashSet<>();
-        userRoles.add(roleRepository.findByType(RoleType.USER));
+        userRoles.add(roleRepository.findByRoleName(RoleType.USER));
         user.setRoles(userRoles);
         userRepository.save(user);
         log.debug("User {} was created", user.getUsername());

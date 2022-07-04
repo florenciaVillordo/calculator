@@ -4,5 +4,7 @@ public enum TransactionName {
     SIGN_UP,
     LOGIN,
     LOGOUT,
-    ADD
+    ADD,
+    TRANSACTIONS,
+    OTHER
 }

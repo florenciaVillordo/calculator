@@ -35,27 +35,27 @@ public class MetricRecorderInterceptorTest {
 
     @Test
     public void testAfterCompletionFailureRequest() {
-        MockHttpServletRequest req = get("/add")
+        MockHttpServletRequest req = get("/add/")
                 .buildRequest(new MockServletContext());
         MockHttpServletResponse resp = new MockHttpServletResponse();
         resp.setStatus(400);
         interceptor.afterCompletion(req, resp, null, null);
 
         ArgumentCaptor<TxResult> txResultArgumentCaptor = ArgumentCaptor.forClass(TxResult.class);
-        verify(metricRecorderService, times(1)).recordTx(eq("/add"), txResultArgumentCaptor.capture());
+        verify(metricRecorderService, times(1)).recordTx(eq(TransactionName.ADD), txResultArgumentCaptor.capture());
         Assertions.assertThat(txResultArgumentCaptor.getValue()).isEqualTo(TxResult.FAILURE);
     }
 
     @Test
     public void testAfterCompletionSuccessRequest() {
-        MockHttpServletRequest req = get("/add")
+        MockHttpServletRequest req = get("/add/")
                 .buildRequest(new MockServletContext());
         MockHttpServletResponse resp = new MockHttpServletResponse();
         resp.setStatus(200);
         interceptor.afterCompletion(req, resp, null, null);
 
         ArgumentCaptor<TxResult> txResultArgumentCaptor = ArgumentCaptor.forClass(TxResult.class);
-        verify(metricRecorderService, times(1)).recordTx(eq("/add"), txResultArgumentCaptor.capture());
+        verify(metricRecorderService, times(1)).recordTx(eq(TransactionName.ADD), txResultArgumentCaptor.capture());
         Assertions.assertThat(txResultArgumentCaptor.getValue()).isEqualTo(TxResult.SUCCESS);
     }
 }

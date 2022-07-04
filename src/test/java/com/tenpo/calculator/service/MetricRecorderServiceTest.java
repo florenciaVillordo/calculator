@@ -4,6 +4,7 @@ package com.tenpo.calculator.service;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.tenpo.calculator.interceptor.TransactionName;
 import com.tenpo.calculator.model.TxHistory;
 import com.tenpo.calculator.model.TxResult;
 import com.tenpo.calculator.repository.TxRepository;
@@ -40,7 +41,7 @@ public class MetricRecorderServiceTest {
     private TxRepository repository;
 
     @Mock
-    private UserService service;
+    private UserService userService;
 
     @Before
     public void setup() {
@@ -51,10 +52,10 @@ public class MetricRecorderServiceTest {
     }
 
     @Test
-    public void recordTxWithUser() {
+    public void test_recordTxWithUser() {
         User user = User.builder().username("name").build();
-        Mockito.when(service.findByUsername(ArgumentMatchers.any())).thenReturn(Optional.of(user));
-        metricRecorderService.recordTx("/add", TxResult.FAILURE);
+        Mockito.when(userService.findByUsername(ArgumentMatchers.any())).thenReturn(Optional.of(user));
+        metricRecorderService.recordTx(TransactionName.ADD, TxResult.FAILURE);
         ArgumentCaptor<TxHistory> txHistoryArgumentCaptor = ArgumentCaptor.forClass(TxHistory.class);
         verify(repository, times(1)).save(txHistoryArgumentCaptor.capture());
         TxHistory txHistory = txHistoryArgumentCaptor.getValue();
@@ -63,14 +64,16 @@ public class MetricRecorderServiceTest {
     }
 
     @Test
-    public void recordTxWithoutUser() {
-        Mockito.when(service.findByUsername(ArgumentMatchers.any())).thenReturn(Optional.empty());
-        metricRecorderService.recordTx("/add", TxResult.SUCCESS);
+    public void test_recordTxWithoutUser() {
+        Mockito.when(userService.findByUsername(ArgumentMatchers.any())).thenReturn(Optional.empty());
+        metricRecorderService.recordTx(TransactionName.ADD, TxResult.SUCCESS);
         ArgumentCaptor<TxHistory> txHistoryArgumentCaptor = ArgumentCaptor.forClass(TxHistory.class);
         verify(repository, times(1)).save(txHistoryArgumentCaptor.capture());
         TxHistory txHistory = txHistoryArgumentCaptor.getValue();
         Assertions.assertThat(txHistory.getResult()).isEqualTo(TxResult.SUCCESS);
         Assertions.assertThat(txHistory.getUser()).isNull();
     }
+
+
 
 }

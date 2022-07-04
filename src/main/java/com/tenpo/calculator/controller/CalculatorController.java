@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,8 +22,8 @@ public class CalculatorController {
     private final CalculatorService calculatorService;
 
     @GetMapping({CalculatorConstant.ADD_URI})
-    public ResponseEntity<ResponseDto> add(@RequestParam BigDecimal firstNumber,
-            @RequestParam BigDecimal secondNumber) {
+    public ResponseEntity<ResponseDto> add(@Valid @NotNull @RequestParam BigDecimal firstNumber,
+            @Valid @NotNull @RequestParam BigDecimal secondNumber) {
         BigDecimal result = calculatorService.add(firstNumber, secondNumber);
         ResponseDto responseDto = ResponseDto.builder().result(result).build();
         return ResponseEntity.ok(responseDto);
