@@ -50,7 +50,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MzI0MjMiLCJpYXQiOjE2NTY5NzE4ODcsImV4cCI6MTY1Njk3Nzg4N30.G7hsrHxaGw5TaakiLYw6f4GxFdjHAZn2Db6knG0v8d-0Hf68KMAuPj0WpOWGtKPFB7zeePYUoaoanoKSKZtPzA",
+						"value": "{{XAuthorization}}",
 						"type": "default"
 					}
 				],
@@ -89,6 +89,35 @@
 		},
 		{
 			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.clear();",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Set Authorization\", function () {",
+							"    console.log(pm.response.text());",
+							"",
+							"    pm.collectionVariables.set(\"XAuthorization\", pm.response.text());",
+							"    console.log(pm.response.text());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -101,7 +130,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"username\":\"user123\",\n    \"password\": \"password\"\n",
+					"raw": "{   \n    \"username\":\"user123\",\n    \"password\": \"password\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -132,7 +161,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY1Njk3NTExNywiZXhwIjoxNjU2OTgxMTE3fQ.ETH0iCsgCGIF7VCIPGVLi5jtt0cQjY69JQFIDH5NNW7-1XgfNnl-zxAMvfK-YTfFM0qAKIMH6kSpSCOm2eOKjw",
+						"value": "{{XAuthorization}}",
 						"type": "default"
 					}
 				],
@@ -146,7 +175,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/transactions?offset=0&limit=10&orderBy=txType&result=SUCCESS&txType=TRANSACTIONS",
+					"raw": "localhost:8080/transactions?offset=0&limit=10&orderBy=txType&result=SUCCESS&txType=LOGIN",
 					"host": [
 						"localhost"
 					],
@@ -173,7 +202,7 @@
 						},
 						{
 							"key": "txType",
-							"value": "TRANSACTIONS"
+							"value": "LOGIN"
 						}
 					]
 				}
@@ -182,6 +211,17 @@
 		},
 		{
 			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.clear();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -190,7 +230,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY1Njk3NzExMSwiZXhwIjoxNjU2OTgzMTExfQ.9wq9H6PCY8l9_JfuZzAox9_Uf3r8S_rW9X8iTsWVauFKxPby1UNXUJxfcNqUxANtQPopS-xC40Z9ybtKhBkffw",
+						"value": "{{XAuthorization}}",
 						"type": "default"
 					}
 				],
@@ -216,6 +256,12 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "XAuthorization",
+			"value": ""
 		}
 	]
 }
