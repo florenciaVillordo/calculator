@@ -101,7 +101,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"username\":\"432423\",\n    \"password\": \"validpass\",\n    \"confirmPassword\":\"validpass\"\n}\n",
+					"raw": "{   \n    \"username\":\"user123\",\n    \"password\": \"password\"\n",
 					"options": {
 						"raw": {
 							"language": "json"
