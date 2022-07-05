@@ -4,6 +4,8 @@ Add calculator
 
 ### Docker image:
 
+https://hub.docker.com/r/flovillordo/calculator-app
+
 ### Run App:
 For start this project, should run the following commands
 
