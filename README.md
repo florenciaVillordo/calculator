@@ -17,6 +17,7 @@ This project is simple Add calculator.
 Project is created with:
 
 * Java 11
+* Springboot
 * Postgres 12.3
 
 
